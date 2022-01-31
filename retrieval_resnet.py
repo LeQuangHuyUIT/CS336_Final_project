@@ -4,13 +4,13 @@ import math
 from scipy import spatial
 from glob import glob
 
-DATAPATH    = "/content/drive/MyDrive/CS336/data"
-gt_files_path = '/content/drive/MyDrive/CS336/gt_files'
-load_vectors = pickle.load(open('/content/drive/MyDrive/CS336/vector.pkl','rb'))
-load_paths = pickle.load(open('/content/drive/MyDrive/CS336/path.pkl','rb'))
+DATAPATH    = r"C:\Users\PC\Desktop\CS336\data"
+gt_files_path = r"C:\Users\PC\Desktop\CS336\gt_files"
+load_vectors = pickle.load(open("vector.pkl",'rb'))
+load_paths = pickle.load(open("path.pkl",'rb'))
 
-query_files = sorted(glob(gt_files_path + '/*query.txt'))
-
+query_files = sorted(glob(gt_files_path + r'\\*query.txt'))
+# print(len(load_paths))
 def get_image_from_query_path(query_path, images_files_path= DATAPATH):
     f = open(query_path, 'r')
     line = (f.readline())
@@ -30,6 +30,13 @@ def get_image_from_query_path(query_path, images_files_path= DATAPATH):
     image = ImageOps.fit(image, (256, 256), Image.ANTIALIAS)
 
     return image
+def extract_vector(model ,path):
+#   img =Image.open(path)
+  img =get_image_from_query_path(path)
+  img_tensor = processing_img(img)
+  vector = model.predict(img_tensor)[0]
+  vector = vector / np.linalg.norm(vector)
+  return vector
 
 def compute_AP(relevant_set, results):
     '''
@@ -111,7 +118,7 @@ def retrieval(query_path):
 # results = get_retrieved_file(image_retrieved_path)
 # print(results)
 # print(gt)
-# print(compute_AP(gt, results))
+# print(compute_AP(gt, results)
 
 # s = 0
 # for i in range(0,len(query_files)):
@@ -121,3 +128,21 @@ def retrieval(query_path):
 #   AP = compute_AP(gt, results)
 #   s = s + AP
 # print("mAP: ",s / len(query_files)) 
+
+
+# Ve len man hinh cac anh gan nhat do
+# import matplotlib.pyplot as plt
+# axes = []
+# grid_size = int(math.sqrt(16))
+# fig = plt.figure(figsize=(10,5))
+
+
+# for id in range(16):
+#     draw_image = image_retrieved_path[id]
+#     axes.append(fig.add_subplot(grid_size, grid_size, id+1))
+
+#     axes[-1].set_title(draw_image[1])
+#     plt.imshow(Image.open(draw_image[0]))
+
+# fig.tight_layout()
+# plt.show()
