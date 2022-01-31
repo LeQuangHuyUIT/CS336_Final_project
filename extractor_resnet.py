@@ -32,3 +32,20 @@ def extract_vector(model ,path):
   vector = model.predict(img_tensor)[0]
   vector = vector / np.linalg.norm(vector)
   return vector
+
+# DATAPATH    = r"C:\Users\PC\Desktop\CS336\data"
+# model = get_extract_model()
+# vectors =[]
+# paths = []
+
+# for path in tqdm(os.listdir(DATAPATH)):
+#   img_path = os.path.join(DATAPATH, path)
+#   img_vector = extract_vector(model, img_path)
+#   vectors.append(img_vector)
+#   paths.append(img_path)
+
+# # print(img_path)
+# vector_file = 'vector.pkl'
+# path_file = 'path.pkl'
+# pickle.dump(vectors, open(vector_file,'wb'))
+# pickle.dump(paths, open(path_file,'wb'))
