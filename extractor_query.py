@@ -10,7 +10,7 @@ import tensorflow as tf
 images_files_path = 'path/to/query_image'
 
 
-def get_image_from_query_path(query_path, images_files_path= images_files_path):
+def get_image_from_query_path_eval(query_path, images_files_path= images_files_path):
     f = open(query_path, 'r')
     line = (f.readline())
     f.close()
@@ -28,6 +28,11 @@ def get_image_from_query_path(query_path, images_files_path= images_files_path):
 
     image = ImageOps.fit(image, (256, 256), Image.ANTIALIAS)
 
+    return image
+
+def get_image_from_query_path(img_name, images_files_path= images_files_path):
+    image = Image.open(img_name)
+    image = ImageOps.fit(image, (256, 256), Image.ANTIALIAS)
     return image
 
 delf = hub.load('https://tfhub.dev/google/delf/1').signatures['default']
